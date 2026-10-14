@@ -84,19 +84,23 @@ const Appointments = () => {
     try {
       setActionLoading(true);
       setError("");
-
+      const selectedService = services.find(
+        (s) =>
+          String(s._id) === String(appointmentForm.serviceId) ||
+          s.name === appointmentForm.serviceId,
+      );
+      console.log(selectedService);
       const appointmentData = {
         ...appointmentForm,
+        serviceId: selectedService
+          ? selectedService._id
+          : appointmentForm.serviceId,
       };
 
       if (editingAppointmentId === null) {
         await add(appointmentsUrl, appointmentData);
       } else {
-        await update(
-          appointmentsUrl,
-          appointmentData,
-          editingAppointmentId
-        );
+        await update(appointmentsUrl, appointmentData, editingAppointmentId);
       }
 
       await loadData();
@@ -131,7 +135,7 @@ const Appointments = () => {
 
   const getServiceName = (serviceId) => {
     const service = services.find(
-      (service) => String(service.id) === String(serviceId)
+      (service) => String(service.id) === String(serviceId),
     );
 
     return service ? service.name : "Unknown Service";
@@ -142,13 +146,7 @@ const Appointments = () => {
   }
 
   if (error && appointments.length === 0) {
-    return (
-      <ErrorState
-        message={error}
-        onRetry={loadData}
-        loading={loading}
-      />
-    );
+    return <ErrorState message={error} onRetry={loadData} loading={loading} />;
   }
 
   return (
@@ -194,9 +192,7 @@ const Appointments = () => {
 
         {appointments.length === 0 ? (
           <div className="rounded-lg border bg-white p-10 text-center">
-            <p className="font-medium text-slate-700">
-              No appointments found
-            </p>
+            <p className="font-medium text-slate-700">No appointments found</p>
 
             <p className="mt-1 text-sm text-slate-500">
               Add a new appointment to get started.
@@ -207,9 +203,7 @@ const Appointments = () => {
             appointments={appointments}
             getServiceName={getServiceName}
             onEdit={handleEditAppointment}
-            onDelete={(appointment) =>
-              setAppointmentToDelete(appointment)
-            }
+            onDelete={(appointment) => setAppointmentToDelete(appointment)}
           />
         )}
 
@@ -217,9 +211,7 @@ const Appointments = () => {
           item={appointmentToDelete}
           itemName={appointmentToDelete?.customerName}
           onCancel={() => setAppointmentToDelete(null)}
-          onConfirm={() =>
-            deleteAppointment(appointmentToDelete.id)
-          }
+          onConfirm={() => deleteAppointment(appointmentToDelete.id)}
           loading={actionLoading}
         />
       </div>

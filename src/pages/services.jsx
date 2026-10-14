@@ -85,11 +85,7 @@ const Services = () => {
       if (editingServiceId === null) {
         await add(servicesUrl, serviceData);
       } else {
-        await update(
-          servicesUrl,
-          serviceData,
-          editingServiceId
-        );
+        await update(servicesUrl, serviceData, editingServiceId);
       }
 
       await loadData();
@@ -127,13 +123,7 @@ const Services = () => {
   }
 
   if (error && services.length === 0) {
-    return (
-      <ErrorState
-        message={error}
-        onRetry={loadData}
-        loading={loading}
-      />
-    );
+    return <ErrorState message={error} onRetry={loadData} loading={loading} />;
   }
 
   return (
@@ -141,13 +131,9 @@ const Services = () => {
       <div className="mx-auto max-w-7xl">
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-semibold text-slate-800">
-              Services
-            </h1>
+            <h1 className="text-2xl font-semibold text-slate-800">Services</h1>
 
-            <p className="mt-1 text-sm text-slate-500">
-              Manage your services
-            </p>
+            <p className="mt-1 text-sm text-slate-500">Manage your services</p>
           </div>
 
           <button
@@ -178,9 +164,7 @@ const Services = () => {
 
         {services.length === 0 ? (
           <div className="rounded-lg border bg-white p-10 text-center">
-            <p className="font-medium text-slate-700">
-              No services found
-            </p>
+            <p className="font-medium text-slate-700">No services found</p>
 
             <p className="mt-1 text-sm text-slate-500">
               Add a new service to get started.
