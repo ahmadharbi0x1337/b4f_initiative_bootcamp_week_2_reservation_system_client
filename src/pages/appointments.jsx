@@ -74,10 +74,9 @@ const Appointments = () => {
       time: appointment.time,
     });
 
-    setEditingAppointmentId(appointment.id);
+    setEditingAppointmentId(appointment._id);
     setShowForm(true);
   };
-
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -135,7 +134,7 @@ const Appointments = () => {
 
   const getServiceName = (serviceId) => {
     const service = services.find(
-      (service) => String(service.id) === String(serviceId),
+      (service) => String(service._id) === String(serviceId),
     );
 
     return service ? service.name : "Unknown Service";
@@ -211,7 +210,7 @@ const Appointments = () => {
           item={appointmentToDelete}
           itemName={appointmentToDelete?.customerName}
           onCancel={() => setAppointmentToDelete(null)}
-          onConfirm={() => deleteAppointment(appointmentToDelete.id)}
+          onConfirm={() => deleteAppointment(appointmentToDelete._id)}
           loading={actionLoading}
         />
       </div>

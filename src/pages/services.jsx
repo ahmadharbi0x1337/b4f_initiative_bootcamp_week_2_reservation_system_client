@@ -65,7 +65,7 @@ const Services = () => {
       price: service.price,
     });
 
-    setEditingServiceId(service.id);
+    setEditingServiceId(service._id);
     setShowForm(true);
   };
 
@@ -182,7 +182,7 @@ const Services = () => {
           item={serviceToDelete}
           itemName={serviceToDelete?.name}
           onCancel={() => setServiceToDelete(null)}
-          onConfirm={() => deleteService(serviceToDelete.id)}
+          onConfirm={() => deleteService(serviceToDelete._id)}
           loading={actionLoading}
         />
       </div>

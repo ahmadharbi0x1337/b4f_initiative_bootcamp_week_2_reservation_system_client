@@ -24,7 +24,7 @@ export const add = async (url, data) => {
 export const update = async (url, data, id) => {
   try {
     const response = await fetch(url + "/" + id, {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
